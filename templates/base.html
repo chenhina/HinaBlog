@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Hina的博客</title>
+    <meta name="description" content="Katen - Minimal Blog & Magazine HTML Theme">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- STYLES -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/index/bootstrap-5.0.0.css' %}">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    {% if user_obj.blog.site_theme %}
+        <link rel="stylesheet" href="/media/css/{{ user_obj.blog.site_theme }}/">
+    {% endif %}
+    {% block css %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static '/index/index.css' %}">
+
+
+</head>
+
+<body>
+
+<!-- site wrapper -->
+<div class="site-wrapper">
+
+    <div class="main-overlay"></div>
+
+    <!-- header -->
+    <header class="header-default">
+        <nav class="navbar navbar-expand-lg" style="background:linear-gradient(to right,#e5db8e,#c881d9);">
+            <div class="container-xl">
+                <!-- site logo -->
+
+                <div class="collapse navbar-collapse">
+                    <!-- menus -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'home' %}">首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">随笔</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">文章</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">其他</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">更多</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- header right section -->
+                <div class="header-right">
+                    <ul class="navbar-nav mr-auto">
+                        {% if request.user.is_authenticated %}
+                            <li class="nav-item">
+                                <img width="70px" class="img-circle"
+                                     src="{{ request.user.avatar.url }}"
+                                     alt="头像">
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{% url 'site' request.user.username %}">{{ request.user.username }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'backend' %}">后台</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">注销</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">登录</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'register' %}">注册</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-xl">
+        <div class="blog-header">
+            <div class="row">
+                <div class="col-md-7">
+                    <h3 style="font-size: 40px" class="blog-title">Hina的博客园</h3>
+                    <p class="lead blog-description">Good Good Study, Day Day UP!
+                        {% if user_obj.blog.site_name %}{{ user_obj.blog.site_name }}
+                        {% endif %}</p>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group" style="border-radius: 50px;">
+                        <input type="text" id="search" class="form-control" style=" height: 50px"
+                               placeholder="Search for...">
+                        <span class="input-group-btn"><button id="btn_go" style="height: 50px"
+                                                              class="btn btn-info"
+                                                              type="button">Go!</button></span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- section main content -->
+    <section class="main-content" style="margin-top: 4%;">
+
+        <div class="container-xl">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="blog-main">
+                        {% block main %}
+                        {% endblock %}
+                    </div><!-- /.blog-main -->
+
+
+                </div><!-- /.row -->
+
+
+                <div class="col-lg-3">
+                    {% block tag %}
+                        {% load mytag %}
+                        {% menu username %}
+                    {% endblock %}
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- footer -->
+    <footer>
+        <div class="container-xl">
+            <div class="footer-inner">
+                <div class="row d-flex align-items-center gy-4">
+                    <!-- copyright text -->
+                    <div class="col-md-2">
+                        {#                        <span class="copyright">© 2021 Katen. Template by ThemeGer.</span>#}
+                    </div>
+
+                    <!-- social icons -->
+                    <div class="col-md-8 text-center">
+                        <p>性感荷官<a href="#">在线发牌</a> by <a
+                                href="#">Hina</a>.</p>
+                        <p>
+                            <a href="#">Back to top</a>
+                        </p>
+                    </div>
+
+                    <!-- go to top button -->
+                    <div class="col-md-2">
+                        {#                        <a href="#" id="return-to-top" class="float-md-end"><i class="icon-arrow-up"></i>Back to Top</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div><!-- end site wrapper -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% block js %}
+{% endblock %}
+</body>
+</html>

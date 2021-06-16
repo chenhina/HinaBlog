@@ -1,0 +1,10 @@
+*/migrations/*.py
+!*/migrations/__init__.py
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+.idea
+
+*.sqlite3

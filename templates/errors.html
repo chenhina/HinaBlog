@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>消失于宇宙星空中</title>
+    {% load static %}
+    <link href="{% static 'css/error.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!-- 代码 开始 -->
+<div class="fullScreen" id="fullScreen">
+{#    <a href="#" class="logo"><img src="{% static 'image/2.jpg' %}"></a>#}
+    <img class="rotating" src="{% static 'image/spaceman.svg' %}">
+    <div class="pagenotfound-text">
+        <h1>Page lost in space</h1>
+        <h2><a href="{% url 'home' %}">Go back to the homepage</a></h2>
+    </div>
+    <canvas id="canvas2d" width="1280" height="225"></canvas>
+</div>
+<script type="text/javascript" src="{% static 'js/error.js' %}"></script>
+<!-- 代码 结束 -->
+
+
+</body>
+</html>

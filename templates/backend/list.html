@@ -1,0 +1,80 @@
+{% extends 'backend/base.html' %}
+
+
+{% block main %}
+    <h1>{{ title }}</h1>
+    {% load mytag %}
+    <a class="btn btn-primary btn-sm" href="{% reverse_url request 'add' name %}"><i class="fa fa-plus"></i></a>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>id</th>
+            <th>名称</th>
+            <th>编辑</th>
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for obj in all_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ obj.pk }}</td>
+                <td>{{ obj.name }}</td>
+                <td><a href="{% reverse_url request 'edit' name obj.pk %}"><i class="fa fa-edit"></i></a></td>
+                <td><a class="del_btn" del_id="{{ obj.pk }}"><i class="fa fa-remove"></i></a>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    {{ page_html|safe }}
+
+{% endblock %}
+
+{% block js %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(".del_btn").click(function () {
+            swal({
+                title: "确认删除?",
+                text: "一旦删除，数据无法恢复！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url:"{% url 'del' name %}",
+                            type: 'post',
+                            data:{
+                                "csrfmiddlewaretoken":"{{ csrf_token }}",
+                                "pk":$(this).attr("del_id"),
+                            },
+                            success: (data) => {
+                                if (data.code === 200) {
+                                    $(this).parent().parent().remove()
+                                    swal("数据已成功删除", {
+                                        icon: "success",
+                                    });
+                                } else {
+                                    swal("删除失败！", {
+                                        icon: "error",
+                                    });
+                                }
+                            }
+                        })
+
+                    } else {
+                        swal("已取消", {
+                            icon: "info",
+                        });
+                    }
+                });
+        })
+    </script>
+{% endblock %}

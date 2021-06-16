@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+    {% for article in all_articles %}
+        <div class="blog-post">
+            <h3 class="blog-post-title"><a
+                    href="{% url 'article' article.blog.userinfo.username article.pk %}">{{ article.title }}</a>
+            </h3>
+            <p class="blog-post-meta">{{ article.create_time|date:'Y-m-d H:i:s' }} by <a
+                    style="font-size: 25px; margin: 0 5px"
+                    href="{% url 'site' article.blog.userinfo.username %}">{{ article.blog.userinfo.username }}</a>
+            </p>
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="{{ article.blog.userinfo.avatar.url }}" alt="..." width="90"
+                         height="85">
+                </a>
+            </div>
+            <div style="font-size: 15px" class="media-body">
+
+                {{ article.desc }}
+            </div>
+            <p class="pull-right">
+                <span>评论数 <span class="glyphicon glyphicon-comment"></span>:{{ article.comment_num }}</span>
+                <span>点赞数 <span class="glyphicon glyphicon-thumbs-up"></span>:{{ article.up_num }}</span>
+                <span>阅读数<span
+                        class="glyphicon glyphicon-eye-open"></span>:{{ article.view_num }}</span>
+            </p>
+        </div><!-- /.blog-post -->
+        <hr>
+    {% endfor %}
+
+    {{ page.page_html|safe }}
+{% endblock %}
+
+{% block tag %}
+    <div class="col-sm-offset-1">
+        <div class="sidebar-module sidebar-module-inset text-center"
+             style="background: rgba(0,0,0,0.1)">
+            <h4>亚洲专区</h4>
+            <p>性感荷官，在线发牌</p>
+
+        </div>
+        <div class="sidebar-module" style="margin-top: 20%;">
+            <h4>广告招租</h4>
+            <ol class="list-unstyled">
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+            </ol>
+        </div>
+        <div class="sidebar-module" style="margin-top: 20%;">
+            <h4>广告招租</h4>
+            <ol class="list-unstyled">
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+                <li><a href="#">广告招租</a></li>
+            </ol>
+        </div>
+    </div><!-- /.blog-sidebar -->
+{% endblock %}

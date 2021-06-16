@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>登录</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css">
+    <link rel="stylesheet" href="https://s1.pstatp.com/cdn/expire-1-M/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link href="{% static 'css/user/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'css/user/style-2.2.0.css' %}" rel="stylesheet">
+    <link href="{% static 'css/user/index.css' %}" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div class="form-signin">
+        <div id="stage">
+            <div id="inner">
+                <div id="cover">
+                    <div id="text">
+                        <span style="color: cyan;">H</span><span style="color: white;">+</span>
+                    </div>
+                    <div id="detail"></div>
+                    <div id="handle"></div>
+                </div>
+                <canvas class="mb-4" id="live2d" width="800" height="800"></canvas>
+            </div>
+            <a id="info" href="javascript:info()"><i class="fa fa-lg fa-info"></i></a>
+            <a id="refresh" href="javascript:refresh()"><i class="fa fa-lg fa-refresh"></i></a>
+        </div>
+        <h3>欢迎使用 Hina</h3>
+
+        <form class="m-t" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <input name="username" id="username" type="text" class="form-control" placeholder="用户名" required>
+            </div>
+            <div class="form-group">
+                <input name="password" id="password" type="password" class="form-control" placeholder="密码" required>
+            </div>
+            <p class="form-group {% if error %} has-error  {% else %} hidden {% endif %}" style="color: red;">
+                <span>{{ error }}</span></p>
+
+            <div class="form-group">
+
+                <div class="row">
+                    <div class="clo-md-6">
+                        <input type="text" id="mycode" placeholder="验证码" name="code" style="outline-style: none ;
+                       border: 1px solid #ccc;
+                       padding: 13px;
+                       width: 119px;">
+                        <img id="code" src="/get_code/" alt="" width="150px" height="47" style="padding-left: 10px">
+                    </div>
+                    <span style="color: red"></span>
+                </div>
+            </div>
+        </form>
+        <button type="submit" id="btn_log" class="btn btn-primary block full-width m-b">登 录</button>
+        <div class="form-group">
+            <div class="checkbox i-checks">
+                <label class="no-padding">
+                    <input type="checkbox" name="remember"><i></i> 自动登录</label>
+                <span style="padding: 0 10px">|</span>
+                <span class="text-muted text-center"><a href="{% url 'register' %}">注册一个新账号</a>
+                        </span>
+            </div>
+        </div>
+        <img src="{% static 'image/1.gif' %}" style="width: 100%;">
+
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="https://s1.pstatp.com/cdn/expire-1-M/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+{#    <script type="text/javascript">#}
+{#        function stop() {#}
+{#            return false;#}
+{#        }#}
+{#        document.oncontextmenu = stop;#}
+{#    </script>#}
+<!-- iCheck -->
+<script src="{% static 'js/user/icheck.min.js' %}"></script>
+<script src="{% static 'js/user/live2d.min.js' %}"></script>
+<!-- Jquery Validate -->
+<script src="{% static 'js/user/jquery.validate.min.js' %}"></script>
+
+<script src="{% static 'js/user/index.js' %}"></script>
+
+<script>
+    $("#code").click(function () {
+        var oldStr = $(this).attr("src");
+        $(this).attr("src", oldStr + "?")
+    })
+
+    $("#btn_log").click(function () {
+        $.ajax({
+            url: "",
+            type: "post",
+            data: {
+                "username": $("#username").val(),
+                "password": $("#password").val(),
+                "code": $("#mycode").val(),
+                "csrfmiddlewaretoken": "{{ csrf_token }}",
+            },
+            success: function (args) {
+                if (args.code === 200) {
+                    // 跳转到首页
+                    window.location.href = args.url
+                } else {
+                    alert(args.msg)
+                    var oldStr = $("#code").attr("src");
+                    $("#code").attr("src", oldStr + "?")
+                    $("#mycode").val("")
+
+                }
+            }
+
+        })
+    })
+</script>
+
+</body>
+
+</html>

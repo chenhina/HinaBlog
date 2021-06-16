@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>后台管理</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-3.3.4.css">
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.6.0.css">
+
+    <!-- FooTable -->
+    <link href="{% static 'plugins/dashboard/css/footable.core.css' %}" rel="stylesheet">
+
+    <link href="{% static 'plugins/dashboard/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/dashboard/css/style.css' %}" rel="stylesheet">
+    <style>
+        .img-circle {
+
+            width: 100px;
+            height: 100px;
+            border: 1px solid white;
+            overflow: hidden; /* 影藏超过标签的部分 */
+            margin-top: 33px; /* 图片下移右移20px */
+            border-radius: 50%; /*边框的角度——圆*/
+        }
+
+        .profile-element {
+            margin-left: 24px;
+            margin-top: -52px;
+        }
+
+        .font-bold {
+            font-size: 26px;
+            margin-left: 21px;
+        }
+    </style>
+    {% block ccs %}
+
+    {% endblock %}
+
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <a href="#">
+                            <img alt="image" class="img-circle" width="50px" id="avatar"
+                                 src="{{ request.user.avatar.url }}"/>
+                        </a>
+                        <span class="clear"></span>
+                        <span class="block m-t-xs"><strong class="font-bold">{{ request.user.username }}</strong></span>
+                    </div>
+                    <div class="logo-element">
+                    </div>
+                </li>
+                <li>
+                    <a href="{% url 'home' %}" class="active"><i class="fa fa-home"></i> <span
+                            class="nav-label">Blog Home</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'backend' %}" class="active"><i class="fa fa-book"></i> <span
+                            class="nav-label">文章管理</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'list' 'category' %}" class="active"><i class="fa fa-delicious"></i> <span
+                            class="nav-label">分类管理</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'list' 'tag' %}" class="active"><i class="fa fa-steam"></i> <span
+                            class="nav-label">标签管理</span></a>
+                </li>
+                <li>
+                    <a class="active" data-toggle="modal" data-target="#myModal"><i class="fa fa-user"></i><span
+                            class="nav-label">修改密码</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'set_avatar' %}" class="active"><i class="fa fa-github-alt" aria-hidden="true"></i><span
+                            class="nav-label">修改头像</span></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h2 class="modal-title text-center" id="myModalLabel">修改密码</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">用户名</label>
+                        <input type="text" value="{{ request.user.username }}" disabled class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">原密码</label>
+                        <input type="password" id="old_password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">新密码</label>
+                        <input type="password" id="new_password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">确认密码</label>
+                        <input type="password" id="confirm_password" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="btn_cp">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                {% block nav_search %}
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
+                                class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="">
+                            <div class="form-group">
+                                <input type="text" placeholder="Search for something..." class="form-control"
+                                       name="query" id="top-search">
+                                <button style="position: relative;left: 190px;top: -47px;" class="btn btn-info btn-sm">
+                                    搜索
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                {% endblock %}
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">Welcome to your backend.</span>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="{% url 'logout' %}">
+                            <i class="fa fa-sign-out"></i> 注销
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            {% block main %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+                <strong>不知道</strong> 说啥了.
+            </div>
+            <div>
+                <strong>Jason</strong> 是一个大帅比
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Mainly scripts -->
+<script src="{% static 'plugins/dashboard/js/jquery-2.1.1.js' %}"></script>
+<script src="{% static 'plugins/dashboard/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/dashboard/js/jquery.metisMenu.js' %}"></script>
+<script src="{% static 'plugins/dashboard/js/jquery.slimscroll.min.js' %}"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="{% static 'plugins/dashboard/js/inspinia.js' %}"></script>
+<script src="{% static 'plugins/dashboard/js/pace.min.js' %}"></script>
+
+<!-- FooTable -->
+<script src="{% static 'plugins/dashboard/js/footable.all.min.js' %}"></script>
+
+<script>
+    $('#btn_cp').click(function () {
+        $.ajax({
+            url: '/set_pwd/',
+            type: 'post',
+            data: {
+                'old_password': $('#old_password').val(),
+                'new_password': $('#new_password').val(),
+                'confirm_password': $('#confirm_password').val(),
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function (args) {
+                if (args.code !== 10000) {
+                    alert(args.msg)
+                } else {
+                    window.location.href = args.url
+                }
+            }
+        })
+    })
+
+    {#$("#btn_go").click(function () {#}
+    {#    $.ajax({#}
+    {#        url:"",#}
+    {#        type:"get",#}
+    {##}
+    {#    })#}
+
+
+</script>
+
+{% block js %}
+
+{% endblock %}
+
+
+</body>
+
+</html>

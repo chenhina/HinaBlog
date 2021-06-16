@@ -1,0 +1,42 @@
+{% extends 'backend/base.html' %}
+
+{% block main %}
+    <h1>文章新增</h1>
+    <form action="" class="form-horizontal" method="post" novalidate>
+        {% csrf_token %}
+
+        {% for field in form_obj %}
+            <div class="form-group {% if field.errors %}has-error{% endif %} ">
+                <label for="{{ field.id_for_label }}"
+                       class="col-sm-2 control-label ">{{ field.label }}</label>
+                <div class="col-sm-8">
+                    {{ field }}
+                    <span id="helpBlock2" class="help-block">{{ field.errors.0 }}</span>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="form-group {% if article_detail_form_obj.content.errors %}has-error{% endif %}">
+            <label for="detail"
+                   class="col-sm-2 control-label ">文章详情</label>
+            <div class="col-sm-8">
+                {#                <textarea class="form-control" rows="5" id="detail" name="detail"></textarea>#}
+                {{ article_detail_form_obj.content }}
+                <span id="helpBlock2" class="help-block">{{ article_detail_form_obj.content.errors.0 }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">保存</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+
+{% block js %}
+{% load static %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
+

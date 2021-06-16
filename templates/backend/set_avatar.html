@@ -1,0 +1,51 @@
+{% extends 'backend/base.html' %}
+
+
+{% block main %}
+
+    <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2 class="text-center">修改头像</h2>
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label ">用户名:</label>
+            <div class="col-sm-8">
+                <input type="text" value="{{ request.user.username }}" class="form-control" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label ">原头像:</label>
+            <div class="col-sm-8">
+                <img src="{{ request.user.avatar.url }}" style="margin-left: 220px" alt="" width="200">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">新头像:</label>
+            <div class="col-sm-8">
+                 <label for="myfile">
+                <img src="/static/image/default.jpg" alt="" width="200" style="margin-left: 220px" id="img">
+                 </label>
+                <input type="file" name="avatar" id="myfile" style="display: none">
+            </div>
+        </div>
+        <button class="btn btn-success btn-block">确认修改</button>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#myfile').change(function () {
+        // 1 先获取用户的头像文件
+        var fileObj = $(this)[0].files[0];
+        // 2 生成一个内置的文件阅读器对象
+        var fileReader = new FileReader();
+        // 3 将头像文件交由阅读器对象读取
+        fileReader.readAsDataURL(fileObj);  // IO操作
+        // 等待阅读器加载完毕之后再修改src属性
+        fileReader.onload = function (){
+            // 4 修改img标签的src属性
+            $('#img').attr('src',fileReader.result)
+        }
+    });
+    </script>
+{% endblock %}

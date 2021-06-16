@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>注册</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css">
+    <link rel="stylesheet" href="https://s1.pstatp.com/cdn/expire-1-M/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link href="{% static 'css/user/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'css/user/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'css/user/style-2.2.0.css' %}" rel="stylesheet">
+    <link href="{% static 'css/user/index.css' %}" rel="stylesheet">
+</head>
+
+<body class="gray-bg" style="">
+<div class="middle-box text-center loginscreen animated fadeInDown">
+    <div class="form-signin">
+        <div id="stage">
+            <div id="inner">
+                <div id="cover" style="bottom: 80%;">
+                    <div id="text">
+                        <span style="color: cyan;">H</span><span style="color: white;">+</span>
+                    </div>
+                    <div id="detail"></div>
+                    <div id="handle"></div>
+                </div>
+                <canvas class="mb-4" id="live2d" width="800" height="800"></canvas>
+            </div>
+            <a id="info" href="javascript:info()"><i class="fa fa-lg fa-info"></i></a>
+            <a id="refresh" href="javascript:refresh()"><i class="fa fa-lg fa-refresh"></i></a>
+        </div>
+        <h3>欢迎注册 Hina</h3>
+        <p>创建一个新账户</p>
+        <div class="form-group">
+            <label for="myfile"><span
+                    style="position: absolute;margin-left: -91px;margin-top: 32px;font-size: 17px; color: rgba(123,158,156,0.6)">头像</span>
+                <img src="{% static 'image/default.jpg' %}" alt="" width="80" height="80" id="img"
+                     style="left: auto; overflow: hidden;">
+            </label>
+            <input type="file" name="avatar" value="{% static 'image/xixi.jpg' %}" id="myfile"
+                   style="display: none">
+        </div>
+        <form class="m-t" id="zc" role="form">
+            {% csrf_token %}
+            {% for form in form_obj %}
+                <div class="form-group">
+                    {{ form }}
+                    <span style="color: red;"></span>
+                </div>
+            {% endfor %}
+        </form>
+        <button id="btn" class="btn btn-primary block full-width m-b">注 册</button>
+
+        <p class="text-muted text-center"><small>已经有账户了？</small><a href="{% url 'login' %}">点此登录</a>
+        </p>
+
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="https://s1.pstatp.com/cdn/expire-1-M/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<!-- iCheck -->
+<script src="{% static 'js/user/icheck.min.js' %}"></script>
+<!-- Jquery Validate -->
+<script src="{% static 'js/user/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/user/live2d.min.js' %}"></script>
+<script src="{% static 'js/user/index.js' %}"></script>
+
+<script>
+    $("#myfile").change(function () {
+        // 1.先获取用户上传的头像文件
+        var fileObj = $(this)[0].files[0];
+        // 2.生成一个内置的文件阅读器对象
+        var fileReader = new FileReader();
+        // 将头像文件交由阅读器对象读取
+        fileReader.readAsDataURL(fileObj);  // IO操作 下面代码不会等待
+        // 等待阅读器加载完毕之后再修改src属性
+        fileReader.onload = function () {
+            // 4.修改img标签的src属性
+            $("#img").attr("src", fileReader.result)
+        }
+    })
+
+    $("#btn").click(function () {
+        // 1.生成内置对象formdata
+        var formData = new FormData();
+        // 2.添加普通键值对数据
+        $.each($("#zc").serializeArray(), function (index, obj) {
+            {#console.log(index,obj)#}
+            formData.append(obj.name, obj.value)
+        });
+        formData.append('avatar', $("#myfile")[0].files[0]);
+        // 4.发送ajax请求
+        $.ajax({
+            url: "",
+            type: "post",
+            data: formData,
+            // 额外两个参数
+            contentType: false,
+            processData: false,
+            success: function (args) {
+                // 跳转
+                if (args.code === 200) {
+                    window.location.href = args.url
+                } else {
+                    $.each(args.msg, function (name, datals) {
+                        var inputId = '#id_' + name;
+                        $(inputId).next().text(datals[0]).parent().addClass('has-error')
+                        {#$(inputId).attr("placeholder",datals[0]).parent().addClass('has-error')#}
+                        {#$("input[name=ename]").next().text(datals[0]).parent().addClass("has-error")#}
+                    })
+                }
+            }
+        })
+
+    })
+
+    $("input").focus(function () {
+        $(this).next().text('').parent().removeClass('has-error')
+        {#$(this).next().css("display", "none")#}
+    })
+
+
+    {#$("input").blur(function () {#}
+    {#    $(this).next().css("display", "")#}
+
+
+</script>
+
+
+</body>
+</html>

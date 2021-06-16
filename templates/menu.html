@@ -1,0 +1,28 @@
+<div class="sidebar-module sidebar-module-inset" style="background: rgba(0,0,0,0.1)">
+    <h4>文章分类</h4>
+    {% for category_obj in category_list %}
+        <p><a href="{% url 'blog' username 'category' category_obj.pk %}">{{ category_obj.name }}({{ category_obj.article_num }})</a></p>
+    {% endfor %}
+    
+
+</div>
+<div class="sidebar-module">
+    <h4>文章标签</h4>
+    <ol class="list-unstyled">
+
+        {% for tag_obj in tag_list %}
+        <li><a href="{% url 'blog' username 'tag' tag_obj.pk %}">{{ tag_obj.name }}({{ tag_obj.article_num }})</a></li>
+        {% endfor %}
+
+    </ol>
+</div>
+<div class="sidebar-module">
+    <h4>日期归档</h4>
+    <ol class="list-unstyled">
+
+        {% for date_obj in data_list %}
+        <li><a href="/{{ username }}/archive/{{ date_obj.month|date:'Y-m' }}">{{ date_obj.month|date:'Y年m月' }}({{ date_obj.article_num }})</a></li>
+        {% endfor %}
+        
+    </ol>
+</div>
