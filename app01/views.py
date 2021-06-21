@@ -493,14 +493,14 @@ from django.conf import settings
 def all_list(request, name):
     cls = getattr(models, name.title())
     if not cls:
-        return HttpResponse('你有问题')
+        return render(request,"errors.html")
     q = get_query(request, ['name', 'pk'])
     all_list = cls.objects.filter(q, blog=request.user.blog)
 
     page = Pagination(request, all_list.count(), 5)
     all_list = all_list[page.start:page.end]
     page_html = page.page_html
-    title = "文章分类" if name == "category" else "文章标签"
+    title = "文章分类" if name == "category"  else  "文章标签" if name == "tag" else "摘抄"
     return render(request, 'backend/list.html', locals())
 
 
@@ -523,9 +523,9 @@ def all_change(request, name, pk=None):
                 return redirect(url)
             return redirect('list', name)
     if pk:
-        title = "编辑分类" if name == "category" else "编辑标签"
+        title = "编辑分类" if name == "category" else "编辑标签" if name == "tag" else "编辑摘抄"
     else:
-        title = "添加分类" if name == "category" else "添加标签"
+        title = "添加分类" if name == "category" else "添加标签" if name == "tag" else "添加摘抄"
     return render(request, 'backend/change.html', locals())
 
 

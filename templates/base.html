@@ -107,7 +107,10 @@
                 </div>
             </div>
         </div>
+        {% load mytag %}
+        {% verse %}
     </div>
+
 
     <!-- section main content -->
     <section class="main-content" style="margin-top: 4%;">
@@ -119,14 +122,11 @@
                         {% block main %}
                         {% endblock %}
                     </div><!-- /.blog-main -->
-
-
                 </div><!-- /.row -->
 
 
                 <div class="col-lg-3">
                     {% block tag %}
-                        {% load mytag %}
                         {% menu username %}
                     {% endblock %}
                 </div>
@@ -168,6 +168,24 @@
 </div><!-- end site wrapper -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+
+    var time;
+    var normar_title = document.title;
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState == 'hidden') {
+            clearTimeout(time);
+            document.title = '再看看吧(o′┏▽┓｀o)';
+        } else {
+            document.title = '回来啦(●ˇ∀ˇ●)';
+            time = setTimeout(function () {
+                document.title = normar_title;
+            }, 3000);
+
+        }
+    });
+
+</script>
 {% block js %}
 {% endblock %}
 </body>

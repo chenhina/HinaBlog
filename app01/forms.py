@@ -81,14 +81,16 @@ class MyRegister(BSForm):
 
     # 钩子函数
     # 局部钩子 校验用户名是否存在
-    def clean_username(self):
-        username = self.cleaned_data.get("username")
-        res = models.UserInfo.objects.filter(username=username).first()
-        if res:
-            self.add_error("username", "用户名已存在")
-        return username
+    # 可以在全局钩子定义self._validate_unique = True 来校验数据唯一性
+    # def clean_username(self):
+    #     username = self.cleaned_data.get("username")
+    #     res = models.UserInfo.objects.filter(username=username).first()
+    #     if res:
+    #         self.add_error("username", "用户名已存在")
+    #     return username
 
     def clean(self):
+        self._validate_unique = True
         password = self.cleaned_data.get("password")
         confirm_password = self.cleaned_data.get("confirm_password")
         if not password == confirm_password:
@@ -159,4 +161,9 @@ class CategoryForm(BSForm):
 class TagForm(BSForm):
     class Meta:
         model = models.Tag
+        fields = ["name"]
+
+class VerseForm(BSForm):
+    class Meta:
+        model = models.Verse
         fields = ["name"]

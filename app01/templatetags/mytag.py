@@ -3,7 +3,7 @@ from django.db.models.functions import TruncMonth
 from django.http.request import QueryDict
 from django.template import Library
 from django.shortcuts import reverse
-
+import random
 from app01 import models
 
 register = Library()
@@ -26,6 +26,13 @@ def menu(username):
     data_list = models.Article.objects.filter(blog=blog,publish_status=True).annotate(month=TruncMonth("create_time")).values(
         "month").annotate(article_num=Count("pk")).values("month", "article_num")
 
+    return locals()
+
+
+@register.inclusion_tag("verse.html")
+def verse():
+    ver_list = models.Verse.objects.all()
+    ver_obj = random.choice(ver_list)
     return locals()
 
 

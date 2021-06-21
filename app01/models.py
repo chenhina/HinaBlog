@@ -160,3 +160,9 @@ class CommentReply(models.Model):
 
     class Meta:
         verbose_name_plural = "评论回复表"
+
+
+class Verse(models.Model):
+    name = models.CharField(max_length=64)
+    blog = models.ForeignKey(to="Site", null=True, on_delete=models.CASCADE)
+

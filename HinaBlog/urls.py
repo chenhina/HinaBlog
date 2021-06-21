@@ -51,13 +51,13 @@ urlpatterns = [
     re_path("article_edit/(\d+)", views.article_edit, name="article_edit"),
     # path("article_del/", views.article_del, name="article_del"),
     # 展示分类/标签
-    re_path("^(category|tag)/", views.all_list, name="list"),
+    re_path("^(category|tag|verse)/", views.all_list, name="list"),
     # 添加标签/分类
-    re_path('^(category|tag)_add/', views.all_change, name='add'),
+    re_path('^(category|tag|verse)_add/', views.all_change, name='add'),
     # 修改标签/分类
-    re_path(r'^(category|tag)_edit/(\d+)', views.all_change, name='edit'),
+    re_path(r'^(category|tag|verse)_edit/(\d+)', views.all_change, name='edit'),
     # 删除三合一
-    re_path(r'^(category|article|tag)_del/', views.all_delete, name='del'),
+    re_path(r'^(category|article|tag|verse)_del/', views.all_delete, name='del'),
 
     # path(r'upload_img/', views.upload_img, name='upload_img'),
     # 修改头像

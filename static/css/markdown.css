@@ -30,12 +30,13 @@
     margin: 0 !important
 }
 
-/*.blog-main img {*/
-/*    max-width: 930px !important;*/
-/*    display: block;*/
-/*    margin: 30px auto;*/
-/*    border-radius: 3px*/
-/*}*/
+.blog-main img:not(.pl-img) {
+    max-width: 100% !important;
+    height: auto;
+    display: block;
+    margin: 30px auto;
+    border-radius: 3px;
+}
 
 .blog-main strong {
     margin: 0 3px
