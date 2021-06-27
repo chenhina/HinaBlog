@@ -21,7 +21,7 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ obj.pk }}</td>
-                <td>{{ obj.name }}</td>
+                <td>{% if name != 'verse' %}<a href="{% url 'backend_b' name obj.pk %}">{{ obj.name }}</a>{% else %}{{ obj.name }}{% endif %}</td>
                 <td><a href="{% reverse_url request 'edit' name obj.pk %}"><i class="fa fa-edit"></i></a></td>
                 <td><a class="del_btn" del_id="{{ obj.pk }}"><i class="fa fa-remove"></i></a>
             </tr>

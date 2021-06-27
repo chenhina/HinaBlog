@@ -1,0 +1,38 @@
+version: "3.0"
+
+services:
+  django:
+    image: django:v3
+    ports:
+      - "8080:8080"
+    container_name: django
+    networks:
+      - django
+    depends_on:  # 必须在哪个容器之后启动
+      - mysql
+
+
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "13306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    container_name: mysql
+    volumes:
+      - "/root/docker-compose/mysql/data:/var/lib/mysql"
+    networks:
+      - django
+
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    container_name: redis
+    networks:
+      - django
+
+networks:
+  django:

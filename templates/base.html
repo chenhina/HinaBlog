@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Hina的博客</title>
+    <link rel="shortcut icon" href="/media/favicon.ico">
     <meta name="description" content="Katen - Minimal Blog & Magazine HTML Theme">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- STYLES -->
@@ -92,18 +93,18 @@
             <div class="row">
                 <div class="col-md-7">
                     <h3 style="font-size: 40px" class="blog-title">Hina的博客园</h3>
-                    <p class="lead blog-description">Good Good Study, Day Day UP!
-                        {% if user_obj.blog.site_name %}{{ user_obj.blog.site_name }}
-                        {% endif %}</p>
+                    <p class="lead blog-description">Good Good Study, Day Day UP!</p>
+                    {#                        {% if user_obj.blog.site_name %}{{ user_obj.blog.site_name }}#}
+                    {#                        {% endif %}</p>#}
                 </div>
                 <div class="col-md-5">
-                    <div class="input-group" style="border-radius: 50px;">
-                        <input type="text" id="search" class="form-control" style=" height: 50px"
-                               placeholder="Search for...">
-                        <span class="input-group-btn"><button id="btn_go" style="height: 50px"
-                                                              class="btn btn-info"
-                                                              type="button">Go!</button></span>
-                    </div><!-- /input-group -->
+                    {#                    <div class="input-group" style="border-radius: 50px;">#}
+                    {#                        <input type="text" id="search" class="form-control" style=" height: 50px"#}
+                    {#                               placeholder="Search for...">#}
+                    {#                        <span class="input-group-btn"><button id="btn_go" style="height: 50px"#}
+                    {#                                                              class="btn btn-info"#}
+                    {#                                                              type="button">Go!</button></span>#}
+                    {#                    </div><!-- /input-group -->#}
                 </div>
             </div>
         </div>
@@ -148,12 +149,10 @@
                     </div>
 
                     <!-- social icons -->
-                    <div class="col-md-8 text-center">
-                        <p>性感荷官<a href="#">在线发牌</a> by <a
-                                href="#">Hina</a>.</p>
-                        <p>
-                            <a href="#">Back to top</a>
-                        </p>
+                    <div class="col-md-8 text-center footstar">
+                        Designed by © 2021 橘丶阳菜
+                        <br><span id="poweredby">すのはら荘の雪</span>
+                        <br>
                     </div>
 
                     <!-- go to top button -->
@@ -164,28 +163,15 @@
             </div>
         </div>
     </footer>
-
 </div><!-- end site wrapper -->
+
+
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="{% static 'live2d/autoload.js' %}"></script>
 
-    var time;
-    var normar_title = document.title;
-    document.addEventListener('visibilitychange', function () {
-        if (document.visibilityState == 'hidden') {
-            clearTimeout(time);
-            document.title = '再看看吧(o′┏▽┓｀o)';
-        } else {
-            document.title = '回来啦(●ˇ∀ˇ●)';
-            time = setTimeout(function () {
-                document.title = normar_title;
-            }, 3000);
-
-        }
-    });
-
-</script>
 {% block js %}
 {% endblock %}
 </body>

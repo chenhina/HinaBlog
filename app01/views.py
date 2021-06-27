@@ -227,7 +227,12 @@ def article(request, username, article_id):
     user_obj = models.UserInfo.objects.filter(username=username).first()
     if not user_obj:
         return render(request, "errors.html")
-    article_obj = models.Article.objects.filter(pk=article_id).first()
+    if request.user.username == username:
+        article_obj = models.Article.objects.filter(pk=article_id).first()
+    else:
+        article_obj = models.Article.objects.filter(pk=article_id, publish_status=True).first()
+    if not article_obj:
+        return render(request, "errors.html")
     article_obj.view_num += 1
     article_obj.save()
     comment_list = models.Comment.objects.filter(article_id=article_id)
@@ -366,12 +371,21 @@ def comment_del(request):
 
 
 @login_required
-def backend(request):
+def backend(request, **kwargs):
     q = get_query(request, ['title'])
     all_articles = models.Article.objects.filter(q, blog=request.user.blog)
+    if kwargs:
+        condition = kwargs.get("condition")
+        pk = kwargs.get("pk")
+        if condition == "category":
+            all_articles = all_articles.filter(category_id=pk)
+        elif condition == "tag":
+            all_articles = all_articles.filter(tag__pk=pk)
+        else:
+            return render(request, "errors.html")
     page = Pagination(request, all_articles.count(), 5)
     all_articles = all_articles[page.start:page.end]
-    return render(request, "backend/backend.html", locals())  # 样式自己找
+    return render(request, "backend/backend.html", locals())
 
 
 # @login_required
@@ -493,14 +507,14 @@ from django.conf import settings
 def all_list(request, name):
     cls = getattr(models, name.title())
     if not cls:
-        return render(request,"errors.html")
+        return render(request, "errors.html")
     q = get_query(request, ['name', 'pk'])
     all_list = cls.objects.filter(q, blog=request.user.blog)
 
     page = Pagination(request, all_list.count(), 5)
     all_list = all_list[page.start:page.end]
     page_html = page.page_html
-    title = "文章分类" if name == "category"  else  "文章标签" if name == "tag" else "摘抄"
+    title = "文章分类" if name == "category" else "文章标签" if name == "tag" else "摘抄"
     return render(request, 'backend/list.html', locals())
 
 
@@ -543,7 +557,7 @@ def all_delete(request, name):
             if ret:
                 # 这里如果是文章表的话我是想删除文章详情表的对应的内容
                 cid = None
-                if hasattr(ret.first(),"content_id"):
+                if hasattr(ret.first(), "content_id"):
                     cid = ret.first().content.id
                 ret.delete()
                 if cid:
@@ -564,8 +578,6 @@ def set_avatar(request):
         return redirect('backend')
     # return render(request, 'set_avatar.html', locals())
     return render(request, "backend/set_avatar.html")
-
-
 
 # def test(request):
 #     q = get_query(request, ['title'])

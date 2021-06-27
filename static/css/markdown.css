@@ -1,6 +1,6 @@
 
 .blog-main {
-    /*cursor: url(https://files-cdn.cnblogs.com/files/zouwangblog/cursor.ico), auto;*/
+    cursor: url(/media/cursor.ico), auto;
     /*background: rgba(130, 139, 137, 0.6);*/
     color: #000;
     min-height: 100% !important;
@@ -23,7 +23,7 @@
     padding: 10px;
     margin: 3px 0;
     font-size: 15px;
-    color: #61687C
+    color: #cb5507
 }
 
 .blog-main ul li p {
@@ -70,42 +70,42 @@
 
 .blog-main h6 {
     margin-top: 28px;
-    font-size: 15px !important;
+    font-size: 18px !important;
     color: #314659;
     margin-bottom: 28px;
 }
 
 .blog-main h5 {
     margin-top: 28px;
-    font-size: 15px !important;
+    font-size: 19px !important;
     color: #314659;
     margin-bottom: 28px;
 }
 
 .blog-main h4 {
     margin-top: 28px;
-    font-size: 15px !important;
+    font-size: 21px !important;
     color: #314659;
     margin-bottom: 28px;
 }
 
 .blog-main h3 {
     margin-top: 28px;
-    font-size: 17px !important;
+    font-size: 24px !important;
     color: #314659;
     margin-bottom: 28px;
 }
 
 .blog-main h2 {
     margin-top: 28px;
-    font-size: 22px !important;
+    font-size: 27px !important;
     color: #314659;
     margin-bottom: 28px;
 }
 
 .blog-main h1 {
     margin-top: 28px;
-    font-size: 27px !important;
+    font-size: 30px !important;
     color: #61687C;
     margin-bottom: 28px;
 
@@ -117,7 +117,7 @@
 }
 
 .blog-main a {
-    color: black
+    color: #327b59
 }
 
 .blog-main table {
@@ -145,54 +145,54 @@
     padding: 8px 16px !important
 }
 
-.blog-main table code {
-    color: #61687C;
-    line-height: 1;
-    font-family: consolas !important;
-    vertical-align: middle;
-    margin: 0 3px;
-    background: #fbfbfb !important;
-    font-size: 14px !important;
-    padding: .2em .3em !important;
-    border-radius: 3px !important;
-    border: 1px solid #eee !important
-}
+/*.blog-main table code {*/
+/*    color: #61687C;*/
+/*    line-height: 1;*/
+/*    font-family: consolas !important;*/
+/*    vertical-align: middle;*/
+/*    margin: 0 3px;*/
+/*    background: #fbfbfb !important;*/
+/*    font-size: 14px !important;*/
+/*    padding: .2em .3em !important;*/
+/*    border-radius: 3px !important;*/
+/*    border: 1px solid #eee !important*/
+/*}*/
 
-.blog-main code {
-    background-color: rgba(255, 255, 255, 0.4);
-    padding-left: 1em;
-    padding-right: 1em;
-    border: none !important;
-    border-radius: 3px !important;
-    font-family: Lucida Console, Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace !important
-}
+/*.blog-main code {*/
+/*    background-color: rgba(255, 255, 255, 0.4);*/
+/*    padding-left: 1em;*/
+/*    padding-right: 1em;*/
+/*    border: none !important;*/
+/*    border-radius: 3px !important;*/
+/*    font-family: Lucida Console, Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace !important*/
+/*}*/
 
-.blog-main code div {
-    background-color: transparent;
-    color: #656c73
-}
+/*.blog-main code div {*/
+/*    background-color: transparent;*/
+/*    color: #656c73*/
+/*}*/
 
-.blog-main code img {
-    margin: 0 !important
-}
+/*.blog-main code img {*/
+/*    margin: 0 !important*/
+/*}*/
 
-.blog-main pre {
-    font-size: 13px;
-    color: #000509;
-    font-family: inherit !important;
-    background: rgba(250, 249, 248, 1);
-    border: 1px solid #292121;
-}
+/*.blog-main pre {*/
+/*    font-size: 13px;*/
+/*    color: #000509;*/
+/*    font-family: inherit !important;*/
+/*    background: rgba(250, 249, 248, 1);*/
+/*    border: 1px solid #292121;*/
+/*}*/
 
-.blog-main pre span {
-    font-family: inherit !important;
-    color: inherit !important
-}
+/*.blog-main pre span {*/
+/*    font-family: inherit !important;*/
+/*    color: inherit !important*/
+/*}*/
 
-.blog-main pre code {
-    font-size: 15px;
-    color: rgba(7, 29, 33, 0.77);
-}
+/*.blog-main pre code {*/
+/*    font-size: 15px;*/
+/*    color: rgba(7, 29, 33, 0.77);*/
+/*}*/
 
 /*.blog-main textarea {*/
 /*    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/

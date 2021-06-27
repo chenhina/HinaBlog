@@ -41,10 +41,10 @@ urlpatterns = [
     path("comment_reply/", views.comment_reply, name="comment_reply"),
     path("comment_del/", views.comment_del, name="comment_del"),
 
-
-
     # 后台管理
+    re_path("backend/(?P<condition>category|tag)/(?P<pk>\d+)/", views.backend, name="backend_b"),
     path("backend/", views.backend, name="backend"),
+
     # 添加文章
     path("article_add/", views.article_add, name="article_add"),
     # 编辑文章
