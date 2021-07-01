@@ -21,36 +21,10 @@ class BSForm(forms.ModelForm):
 
 # 注册forms组件
 class MyRegister(BSForm):
-    # 用户名
-    # username = forms.CharField(
-    #     label="用户名",
-    #     error_messages={
-    #         "required": "用户名不能为空",
-    #     },
-    #     widget=forms.widgets.TextInput(attrs={"class": "form-control"})
-    # )
     password = forms.CharField(widget=forms.PasswordInput(attrs={'type': 'password', 'placeholder': '密码'}), label='密码',
                                error_messages={'required': '密码不能为空'})
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'type': 'password', 'placeholder': '确认密码'}),
                                        label='确认密码', error_messages={'required': '确认密码不能为空'})
-
-    # # 密码
-    # password = forms.CharField(
-    #     label="密码",
-    #     error_messages={
-    #         "required": "密码不能为空",
-    #     },
-    #     widget=forms.widgets.PasswordInput(attrs={'placeholder': '密码'})
-    # )
-    #
-    # # 确认密码
-    # confirm_password = forms.CharField(
-    #     label="密码",
-    #     error_messages={
-    #         "required": "确认密码不能为空",
-    #     },
-    #     widget=forms.widgets.PasswordInput(attrs={'placeholder': '密码'})
-    # )
 
     # 邮箱
     email = forms.EmailField(

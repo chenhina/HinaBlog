@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="{% static 'master/css/jquery-sinaEmotion-2.1.0.css' %}">
     <link rel="stylesheet" href="{% static 'css/code.css' %}">
+    {#    <link rel="stylesheet" href="{% static 'css/code.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/markdown.css' %}">
 {% endblock %}
 
@@ -17,6 +18,7 @@
 {% block main %}
 
     <div style="margin-left: 26px">
+        <p class="pull-right" style="">{{ article_obj.create_time|date:'Y-m-d' }}</p>
         <div class="blog-detail">
             <h1 class="text-center">{{ article_obj.title }}</h1>
             <p>{{ article_obj.content.content|safe }}</p>
